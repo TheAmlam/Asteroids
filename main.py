@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import *
 from player import Player
@@ -23,9 +24,9 @@ def main ():
 
     dt = 0
 
-    game_loop(screen, clock, dt, updatable, drawable)
+    game_loop(screen, clock, dt, updatable, drawable, asteroids, player)
 
-def game_loop(screen, clock, dt, updatable, drawable):
+def game_loop(screen, clock, dt, updatable, drawable, asteroids, player):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -33,6 +34,12 @@ def game_loop(screen, clock, dt, updatable, drawable):
         
         for obj in updatable:
             obj.update(dt)
+
+        for asteroid in asteroids:
+            if obj.collision_detection(player):
+                print("Game over!")
+                sys.exit()
+            
 
         screen.fill("black")
 
