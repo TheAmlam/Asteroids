@@ -27,9 +27,9 @@ def main ():
 
     dt = 0
 
-    game_loop(screen, clock, dt, updatable, drawable, asteroids, player)
+    game_loop(screen, clock, dt, updatable, drawable, asteroids, player, shots)
 
-def game_loop(screen, clock, dt, updatable, drawable, asteroids, player):
+def game_loop(screen, clock, dt, updatable, drawable, asteroids, player, shots):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -42,7 +42,10 @@ def game_loop(screen, clock, dt, updatable, drawable, asteroids, player):
             if asteroid.collision_detection(player):
                 print("Game over!")
                 sys.exit()
-            
+            for shot in shots:
+                if shot.collision_detection(asteroid):
+                    shot.kill()
+                    asteroid.split()
 
         screen.fill("black")
 
